@@ -1,15 +1,15 @@
 import React from 'react'
 import Header from '../components/header'
 
-class Home extends React.Component {
+class News extends React.Component {
 
   render(){
     return(
-      <div className='Home'>
-        <Header active='.home' />
+      <div className='News'>
+        <Header active='.news' />
       </div>
     )
   }
 }
 
-export default Home
+export default News

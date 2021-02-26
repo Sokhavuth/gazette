@@ -65,8 +65,8 @@ if (!dev && cluster.isMaster) {
       }));
     
       // Example server-side routing
-      server.get('/a', (req, res) => {
-        return nextApp.render(req, res, '/b', req.query)
+      server.get('/news', (req, res) => {
+        return nextApp.render(req, res, '/news', req.query)
       })
 
       // Example server-side routing

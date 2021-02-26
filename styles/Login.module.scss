@@ -1,0 +1,19 @@
+.Login{
+  .login_form{
+    margin-top: 30px;
+    width: 400px;
+    margin: 30px auto;
+    display: grid;
+    grid-template-columns: 20% auto;
+    grid-gap: 5px;
+    align-items: center;
+    background: $vBackground;
+    padding: 20px;
+    span{
+      text-align: right;
+    }
+    input{
+      padding: 5px;
+    }
+  }
+}

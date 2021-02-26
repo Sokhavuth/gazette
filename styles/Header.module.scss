@@ -1,0 +1,16 @@
+.Header{
+  display: grid;
+  grid-template-columns: 25% auto 25%;
+  align-items: center;
+  text-align: center;
+  h1{
+    font: 50px/1.5 PirataOne;
+    margin: 20px;
+  }
+}
+
+@media only screen and (max-width: 600px){
+  .Header{
+    grid-template-columns: 100%;
+  }
+}
