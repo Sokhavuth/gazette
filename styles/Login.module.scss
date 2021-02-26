@@ -7,7 +7,7 @@
     grid-template-columns: 20% auto;
     grid-gap: 5px;
     align-items: center;
-    background: #ddd;
+    background: var(--vBackground);
     padding: 20px;
     span{
       text-align: right;
