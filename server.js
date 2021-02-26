@@ -53,7 +53,7 @@ if (!dev && cluster.isMaster) {
       
       // Static files
       // https://github.com/zeit/next.js/tree/4.2.3#user-content-static-file-serving-eg-images
-      server.use('/static', express.static(path.join(__dirname, 'static'), {
+      server.use('/static', express.static(path.join(__dirname, 'public'), {
         maxAge: dev ? '0' : '365d'
       }));
 
@@ -70,8 +70,8 @@ if (!dev && cluster.isMaster) {
       })
 
       // Example server-side routing
-      server.get('/b', (req, res) => {
-        return nextApp.render(req, res, '/a', req.query)
+      server.get('/contact', (req, res) => {
+        return nextApp.render(req, res, '/contact', req.query)
       })
 
       // Default catch-all renders Next app
