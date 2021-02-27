@@ -16,38 +16,21 @@ class Login{
       if(self.bcrypt.compareSync(args.password, user.password)){
         data.success = true;
         req.session.data = data
-        req.session.user = user;
+        req.session.user = user
+        return user
       }else{
         data.message = 'The password is wrong.';
         data.success = false;
         req.session.data = data
+        return {metadata: data.message}
       }
     }else{
       data.message = 'The email is wrong.';
       data.success = false;
       req.session.data = data
+      return {metadata: data.message}
     }
 
-    return user
-  }
-
-  checkLogin(req, res){
-    if(req.session.user){
-      res.json({logged: true});
-    }else{
-      res.json({logged: false});
-    }
-  }
-
-  logOut(req, res){
-    if(req.session.user){
-      req.session.destroy(function (err) {
-        if(err)
-          res.json({success: false});
-        else
-          res.json({success: true});
-      });  
-    }
   }
 
 }//end class

@@ -17,8 +17,8 @@ const port = process.env.PORT || 3000
 process.env.TZ = "Asia/Phnom_Penh"
 
 const { graphqlHTTP } = require('express-graphql')
-const schema = require('./pages/api/schemas/schema')
-const root = require('./pages/api/resolvers/root')
+const schema = require('./pages/api/schemas')
+const root = require('./pages/api/resolvers')
 
 // Multi-process to utilize all CPU cores.
 if (!dev && cluster.isMaster) {
@@ -75,13 +75,19 @@ if (!dev && cluster.isMaster) {
       }))
     
       // Example server-side routing
-      server.get('/news', (req, res) => {
-        return nextApp.render(req, res, '/news', req.query)
+      server.get('/dashboard', (req, res) => {
+        if(req.session.user)
+          return nextApp.render(req, res, '/dashboard', req.query)
+        else
+          return nextApp.render(req, res, '/login', req.query)
       })
 
       // Example server-side routing
-      server.get('/contact', (req, res) => {
-        return nextApp.render(req, res, '/contact', req.query)
+      server.get('/login', (req, res) => {
+        if(req.session.user)
+          return nextApp.render(req, res, '/dashboard', req.query)
+        else
+          return nextApp.render(req, res, '/login', req.query)
       })
 
       // Default catch-all renders Next app

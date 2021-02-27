@@ -8,6 +8,7 @@
     "start": "NODE_ENV=production node server.js -p $PORT"
   },
   "dependencies": {
+    "@apollo/client": "^3.3.11",
     "bcryptjs": "^2.4.3",
     "connect-mongo": "^4.2.0",
     "deepcopy": "^2.1.0",
