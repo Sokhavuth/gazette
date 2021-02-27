@@ -3,15 +3,19 @@
   "version": "1.0.0",
   "description": "Deploy Next.js server-side React apps using a custom Express server to Heroku",
   "scripts": {
-    "dev": "node server.js -p $PORT",
+    "dev": "nodemon server.js -p $PORT",
     "build": "next build",
     "start": "NODE_ENV=production node server.js -p $PORT"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "connect-mongo": "^4.2.0",
+    "deepcopy": "^2.1.0",
     "dotenv": "^8.2.0",
-    "express": "^4.16.4",
+    "express": "^4.17.1",
+    "express-graphql": "^0.12.0",
     "express-session": "^1.17.1",
+    "graphql": "^15.5.0",
     "moment-timezone": "^0.5.33",
     "mongoose": "^5.11.15",
     "next": "^10.0.7",
