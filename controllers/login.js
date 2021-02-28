@@ -33,6 +33,26 @@ class Login{
 
   }
 
+  checklogin(req){
+    if(req.session.user){
+      return {logged: true}
+    }else{
+      return {logged: false}
+    }
+  }
+
+  logOut(req, res){
+    if(req.session.user){
+      req.session.destroy(function (err) {
+        if(err)
+          console.log(err)
+      })
+      
+      res.redirect('/') 
+    }
+
+  }
+
 }//end class
 
 module.exports = new Login();

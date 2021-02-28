@@ -5,8 +5,8 @@ import { ApolloClient, InMemoryCache, gql } from '@apollo/client'
 import Router from 'next/router'
 
 class Login extends React.Component {
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
     this.state = {
       email: '',
       password: '',
@@ -60,6 +60,10 @@ class Login extends React.Component {
   }
 
   render(){
+    if(this.props.logged){
+      Router.push('/dashboard')
+    }
+
     return(
       <div className={`${styles.Login}`}>
         <Header active='.login' />
@@ -77,3 +81,13 @@ class Login extends React.Component {
 }
 
 export default Login
+
+export async function getServerSideProps({ req }){
+  const login = require('../controllers/login')
+  const result = login.checklogin(req)
+  return {
+    props: {
+      logged: result.logged,
+    }
+  }
+}

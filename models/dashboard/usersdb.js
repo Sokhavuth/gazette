@@ -14,6 +14,7 @@ class Usersdb{
       date: {type: Date, required: true}
     });
 
+    mongoose.models = {}
     const users = mongoose.model('users', usersSchema);
     this.users = users;
     this.bcrypt = bcrypt;

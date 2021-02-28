@@ -32,7 +32,7 @@ class Header extends React.Component {
             <input type='text' name='query' required />
             <input type='submit' value='Search' />
           </form>
-          <div className={styles.logout}>Logout</div>
+          <div className={styles.logout}><a href="/api/logout">Logout</a></div>
         </div>
       </div>
     )
