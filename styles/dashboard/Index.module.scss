@@ -2,10 +2,15 @@
   .body{
     margin-top: 30px;
     display: grid;
-    grid-template-columns: 20% auto;
+    grid-template-columns: 20% auto 20%;
     .content{
       padding: 0 20px;
-      border-left: 1px solid #ddd;
+      border: 1px solid #ddd;
+      border-bottom: 0;
+      border-top: 0;
+    }
+    .sidebarRight{
+      padding-left: 20px;
     }
   }
 }

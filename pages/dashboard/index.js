@@ -25,7 +25,8 @@ class Index extends React.Component {
           <div className={styles.content}>
             content
           </div>
-          <div></div><Footer />
+          <div className={styles.sidebarRight}>Sidebar</div>
+          <div></div><Footer /><div></div>
         </div>
       </div>
     )
