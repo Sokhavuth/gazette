@@ -1,0 +1,33 @@
+$vBackground: #ddd;
+
+.HeaderWrapper{
+  background: $vBackground;
+  .Header{
+    display: grid;
+    grid-template-columns: 25% auto 20%;
+    align-items: center;
+    h1{
+      margin: 10px 0;
+      font: 24px/1.5 Oswald;
+    }
+    .search{
+      width: 100%;
+      select{
+        width: 20%;
+      }
+      input[type=text]{
+        width: 65%;
+      }
+      input[type=submit]{
+        width: 15%;
+      }
+      input, select{
+        padding: 5px;
+      }
+    }
+    .logout{
+      text-align: right;
+      font-weight: bold;
+    }
+  }
+}

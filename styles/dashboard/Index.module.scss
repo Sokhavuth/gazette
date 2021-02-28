@@ -1,0 +1,11 @@
+.Index{
+  .body{
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 20% auto;
+    .content{
+      padding: 0 20px;
+      border-left: 1px solid #ddd;
+    }
+  }
+}
