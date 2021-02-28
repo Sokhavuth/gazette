@@ -65,8 +65,8 @@ class Login extends React.Component {
         <Header active='.login' />
         
         <form className={`${styles.login_form}`} onSubmit={this.onSubmitHandler} >
-          <span>Email:</span><input name='email' type='email' onChange={this.onChangeHandler} />
-          <span>Password:</span><input name='password' type='password' onChange={this.onChangeHandler} />
+          <span>Email:</span><input name='email' type='email' onChange={this.onChangeHandler} required />
+          <span>Password:</span><input name='password' type='password' onChange={this.onChangeHandler} required />
           <span></span><input type='submit' value='Submit' />
           <span></span><div style={{textAlign: 'center'}}>{this.state.message}</div>
         </form>
