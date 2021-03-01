@@ -31,7 +31,17 @@ class Index extends React.Component {
           <div className={styles.content}>
             <Ckeditor />
           </div>
-          <div className={styles.sidebarRight}>Sidebar</div>
+          <div className={styles.sidebarRight}>
+            <form className={styles.usersForm} action='/api/users/insert' method='post'>
+              <input name='username' type='text' placeholder='Username' required />
+              <input name='email' type='email' placeholder='Email' required />
+              <input name='password' type='password' placeholder='Password' required />
+              <input name='role' type='text' placeholder='Role' required />
+              <input name='date' value={this.props.date} type='date' required />
+              <input name='time' value={this.props.time} type='time' required />
+              <input type='submit' value='Submit' />
+            </form>
+          </div>
           <div></div><Footer /><div></div>
         </div>
       </div>
@@ -44,9 +54,14 @@ export default Index
 export async function getServerSideProps({ req }){
   const login = require('../../controllers/login')
   const result = login.checklogin(req)
+  const today = new Date()
+  const date = today.toLocaleDateString('fr-CA')
+  const time = today.toLocaleTimeString('it-IT')
   return {
     props: {
       logged: result.logged,
+      date: date,
+      time: time
     }
   }
 }

@@ -11,6 +11,16 @@
     }
     .sidebarRight{
       padding-left: 20px;
+      .usersForm{
+        input{
+          padding: 5px;
+          width: 100%;
+          margin-bottom: 10px;
+        }
+        input:last-child{
+          margin-bottom: 0;
+        }
+      }
     }
   }
 }

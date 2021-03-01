@@ -27,3 +27,7 @@ a:hover{
 :root{
   --vBackground: #ddd;
 }
+
+.Ckeditor .ck-editor__editable {
+    min-height: 400px;
+  }
