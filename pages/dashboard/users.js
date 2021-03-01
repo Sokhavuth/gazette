@@ -5,6 +5,7 @@ import Footer from '../../components/footer'
 import styles from '../../styles/dashboard/Users.module.scss'
 import Router from 'next/router'
 import dynamic from 'next/dynamic'
+import { ApolloClient, InMemoryCache, gql } from '@apollo/client'
 
 const Ckeditor = dynamic(
   () => import('../../components/dashboard/ckeditor'),
@@ -14,7 +15,67 @@ const Ckeditor = dynamic(
 class Index extends React.Component {
   constructor(props){
     super(props)
+    this.state = {
+      username: '',
+      email: '',
+      password: '',
+      role: '',
+      info: '',
+      date: '',
+      time: '',
+      message: ''
+    }
   }
+
+  getCKEditorContent = (content) => {
+    this.setState({info: content})
+  }
+
+  onChangeHandler = (event) => {
+    let nam = event.target.name
+    let val = event.target.value
+    this.setState({[nam]: val})
+  }
+
+  onSubmitHandler = async (event) => {
+    event.preventDefault()
+  
+    const client = new ApolloClient({
+      uri: '/graphql',
+      cache: new InMemoryCache()
+    })
+
+    const mutation = gql`
+    mutation Create($username: String, $email: String, $password: String, $role: String, $info: String, $date: String, $time: String){
+      create(username: $username, email: $email, password: $password, role: $role, info: $info, date: $date, time: $time) {
+        userid
+        username
+        email
+        password
+        role
+        info
+        date
+        time
+        metadata
+      } 
+    }
+    `
+
+    const { data } = await client.mutate({
+      mutation: mutation,
+      variables: {
+        username: this.state.username,
+        email: this.state.email,
+        password: this.state.password,
+        role: this.state.role,
+        info: this.state.info,
+        date: document.querySelector('[name="date"]').value,
+        time: document.querySelector('[name="time"]').value,
+      }
+    })
+    this.setState({message: data.create.metadata})
+  }
+
 
   render(){
     if(!(this.props.logged)){
@@ -29,16 +90,17 @@ class Index extends React.Component {
             <Sidebar />
           </div>
           <div className={styles.content}>
-            <Ckeditor />
+            <Ckeditor getCKEditorContent={this.getCKEditorContent} />
+            <div className={styles.status}>Status: {this.state.message}</div>
           </div>
           <div className={styles.sidebarRight}>
-            <form className={styles.usersForm} action='/api/users/insert' method='post'>
-              <input name='username' type='text' placeholder='Username' required />
-              <input name='email' type='email' placeholder='Email' required />
-              <input name='password' type='password' placeholder='Password' required />
-              <input name='role' type='text' placeholder='Role' required />
-              <input name='date' value={this.props.date} type='date' required />
-              <input name='time' value={this.props.time} type='time' required />
+            <form className={styles.usersForm} onSubmit={this.onSubmitHandler} method='post'>
+              <input name='username' onChange={this.onChangeHandler} type='text' placeholder='Username' required />
+              <input name='email' onChange={this.onChangeHandler} type='email' placeholder='Email' required />
+              <input name='password' onChange={this.onChangeHandler} type='password' placeholder='Password' required />
+              <input name='role' onChange={this.onChangeHandler} type='text' placeholder='Role' required />
+              <input name='date' onChange={this.onChangeHandler} value={this.props.date} type='date' required />
+              <input name='time' onChange={this.onChangeHandler} value={this.props.time} type='time' required />
               <input type='submit' value='Submit' />
             </form>
           </div>

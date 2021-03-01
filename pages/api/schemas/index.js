@@ -10,10 +10,14 @@ const schema = buildSchema(`
     role: String
     info: String
     date: String
+    time: String
     metadata: String
   }
   type Query {
     login(email: String, password: String): User
+  }
+  type Mutation {
+    create(username: String, password: String, email: String, role: String, info: String, date: String, time: String): User
   }
 `)
 

@@ -40,6 +40,52 @@ class Usersdb{
     }
   }
 
+  async checkEmail(args){
+    return await this.users.findOne({email: args.email});
+  }
+
+  async insertUser(args){
+    const hash = this.bcrypt.hashSync(args.password, 12);
+    const id = (new Date()).getTime().toString(36) + Math.random().toString(36).slice(2);
+    const date = new Date(args.date+' '+args.time)
+    const user = new (this.users)({userid:id, username:args.username, password:hash, email:args.email, role:args.role, info:args.info, date: date});
+    return await user.save();
+  }
+
+  async selectUser(amount=5, id=false, page=0){
+    if(id){
+      return await this.users.findOne({userid: id});
+    }else if(page){
+      return await this.users.find().skip(amount * page).sort({date: -1, _id: -1}).limit(amount);
+    }else{
+      return await this.users.find().sort({date: -1, _id: -1}).limit(amount);
+    }
+  }
+
+  async countUser(){
+    return await this.users.countDocuments({});
+  }
+
+  async updateUser(req){
+    const user = await this.users.findOne({userid:req.params.authorId});
+    user.username = req.body.username;
+    user.email = req.body.email;
+    user.role = req.body.role;
+    user.info = req.body.info;
+    user.date = new Date(req.body.date);
+    if(req.body.password !== "oldpassword"){
+      const hash = this.bcrypt.hashSync(req.body.password, 12);
+      user.password = hash;
+    }
+    return await user.save();
+  }
+
+  async deleteUser(req){
+    const user = await this.users.findOne({userid:req.params.authorId});
+    await this.users.deleteOne({userid:user.userid});
+    return user;
+  }
+
 }//class ending 
 
 module.exports = new Usersdb();

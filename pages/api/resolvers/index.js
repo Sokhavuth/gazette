@@ -5,6 +5,11 @@ var root = {
     const user = await login.postLogin(args, req)
     return user
   },
+  create: async (args, req) => {
+    const author = require('../../../controllers/dashboard/author')
+    const user = await author.postAuthor(args, req)
+    return user
+  }
 }
 
 module.exports = root

@@ -8,6 +8,11 @@
       border: 1px solid #ddd;
       border-bottom: 0;
       border-top: 0;
+      .status{
+        border: 1px solid rgb(184, 184, 184);
+        text-align: center;
+        padding: 5px;
+      }
     }
     .sidebarRight{
       padding-left: 20px;
