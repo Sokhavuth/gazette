@@ -22,12 +22,10 @@ class Ckeditor extends Component {
           editor={ ClassicEditor }
           config={ this.state.config }
           onReady={ editor => {
-            console.log( editor )
+            this.props.getCKEditor(editor)
           } }
           onChange={ ( event, editor ) => {
             const data = editor.getData()
-            this.props.getCKEditorContent(data)
-            
           } }
           onBlur={ ( event, editor ) => {
             console.log( 'Blur.', editor )

@@ -1,0 +1,32 @@
+.Listing{
+  margin: 0;
+  padding: 0;
+  li{
+    margin-top: 10px;
+    list-style-type: none;
+    background: rgb(240, 240, 240);
+    padding: 5px;
+    display: grid;
+    grid-template-columns: 9% auto 15%;
+    grid-gap: 10px;
+    align-items: center;
+    font: 14px/1.5 Vidaloka;
+    .thumb{
+      width: 100%;
+      float: left;
+      border-radius: 50%;
+    }
+    .edit{
+      text-align: right;
+      visibility: hidden;
+      img{
+        width: 35px;
+        float: right;
+        margin-left: 10px;
+      }
+    }
+  }
+  li:hover .edit{
+    visibility: visible;
+  }
+}

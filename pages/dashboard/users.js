@@ -1,11 +1,13 @@
 import React from 'react'
 import Header from '../../components/dashboard/header'
 import Sidebar from '../../components/dashboard/sidebar'
+import Listing from '../../components/dashboard/listing'
 import Footer from '../../components/footer'
 import styles from '../../styles/dashboard/Users.module.scss'
 import Router from 'next/router'
 import dynamic from 'next/dynamic'
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client'
+const deepcopy = require('deepcopy')
 
 const Ckeditor = dynamic(
   () => import('../../components/dashboard/ckeditor'),
@@ -23,12 +25,20 @@ class Index extends React.Component {
       info: '',
       date: '',
       time: '',
-      message: ''
+      message: '',
+      userData: JSON.parse(this.props.userData)
     }
   }
 
-  getCKEditorContent = (content) => {
-    this.setState({info: content})
+  componentDidMount() {
+    const userData = JSON.parse(this.props.userData)
+    this.setState({
+      message: `Total number of users ${userData.count}`,
+    })
+  }
+
+  getCKEditor = (editor) => {
+    this.editor = editor
   }
 
   onChangeHandler = (event) => {
@@ -60,7 +70,7 @@ class Index extends React.Component {
       } 
     }
     `
-
+    
     const { data } = await client.mutate({
       mutation: mutation,
       variables: {
@@ -68,20 +78,22 @@ class Index extends React.Component {
         email: this.state.email,
         password: this.state.password,
         role: this.state.role,
-        info: this.state.info,
+        info: (this.editor).getData(),
         date: document.querySelector('[name="date"]').value,
         time: document.querySelector('[name="time"]').value,
       }
     })
-    this.setState({message: data.create.metadata})
+    const metadata = JSON.parse(data.create.metadata)
+    this.setState({
+      message: metadata.message,
+    })
+    Router.reload()
   }
-
 
   render(){
     if(!(this.props.logged)){
       Router.push('/login')
     }
-    
     return(
       <div className={`${styles.Users}`}>
         <Header title='Users' />
@@ -90,8 +102,9 @@ class Index extends React.Component {
             <Sidebar />
           </div>
           <div className={styles.content}>
-            <Ckeditor getCKEditorContent={this.getCKEditorContent} />
+            <Ckeditor getCKEditor={this.getCKEditor} />
             <div className={styles.status}>Status: {this.state.message}</div>
+            <Listing userData={this.state.userData} />
           </div>
           <div className={styles.sidebarRight}>
             <form className={styles.usersForm} onSubmit={this.onSubmitHandler} method='post'>
@@ -115,6 +128,8 @@ export default Index
 
 export async function getServerSideProps({ req }){
   const login = require('../../controllers/login')
+  const users = require('../../controllers/dashboard/author')
+  const userData = await users.getAuthors()
   const result = login.checklogin(req)
   const today = new Date()
   const date = today.toLocaleDateString('fr-CA')
@@ -123,7 +138,8 @@ export async function getServerSideProps({ req }){
     props: {
       logged: result.logged,
       date: date,
-      time: time
+      time: time,
+      userData: userData
     }
   }
 }
