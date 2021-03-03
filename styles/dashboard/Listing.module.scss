@@ -18,15 +18,15 @@
     }
     .edit{
       text-align: right;
-      visibility: hidden;
       img{
+        visibility: hidden;
         width: 35px;
         float: right;
         margin-left: 10px;
       }
     }
   }
-  li:hover .edit{
+  li:hover img{
     visibility: visible;
   }
 }

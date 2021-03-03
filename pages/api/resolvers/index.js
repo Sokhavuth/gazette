@@ -5,9 +5,19 @@ var root = {
     const user = await login.postLogin(args, req)
     return user
   },
-  create: async (args, req) => {
+  createuser: async (args, req) => {
     const author = require('../../../controllers/dashboard/author')
     const user = await author.postAuthor(args, req)
+    return user
+  },
+  getuser: async (args) => {
+    const author = require('../../../controllers/dashboard/author')
+    const user = await author.getAuthors(args.userid)
+    return user
+  },
+  updateuser: async (args, req) => {
+    const author = require('../../../controllers/dashboard/author')
+    const user = await author.updateAuthor(args, req)
     return user
   }
 }

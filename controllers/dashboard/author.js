@@ -38,15 +38,50 @@ class Author{
     }
   }
 
-  async getAuthors(){
-    const self = this;
-    const data = this.deepcopy(this.vdict);
+  async getAuthors(id=false){
+    const self = this
+    const data = this.deepcopy(this.vdict)
     
-    data.authors = await this.usersdb.selectUser(this.vdict.dashboardLimit); 
-    data.thumbs = self.tool.getThumbUrl(data.authors, 'author');
-    data.count = await self.usersdb.countUser();
+    if(id){
+      const user = await this.usersdb.selectUser(1, id) 
+      const thumbs = self.tool.getThumbUrl([user], 'author')
+      const message = `User ${user.username} is being edited.`
+      user.metadata = JSON.stringify({thumb: thumbs[0], message: message})
+      return user
+    }else{
+      data.authors = await this.usersdb.selectUser(this.vdict.dashboardLimit)
+      data.thumbs = self.tool.getThumbUrl(data.authors, 'author')
+      data.count = await self.usersdb.countUser()
     
-    return JSON.stringify(data)
+      return JSON.stringify(data)
+    }
+  }
+
+  async updateAuthor(args, req){
+    const self = this
+    
+    if((req.session.user.role === "Admin") || (req.session.user.userid === args.userid)){
+      const user = await this.usersdb.checkEmail(args)
+      
+      if(user && (args.userid !== user.userid)){
+        const message = 'This email is already being used.​'
+        return {metadata: message}
+      }else{
+        const result = await self.emailCheck(args.email)
+        if(result){
+          const author = await self.usersdb.updateUser(args);
+          author.metadata = `User ${author.username} was successfully updated`;
+          return author
+        }else{
+          const message = 'This email does not exist.';
+          return {metadata: message}
+        }
+      }
+    
+   }else{
+      const message = 'You are not authorized to modify this user.';
+      return {metadata: message}
+    }
   }
 
 }//end class

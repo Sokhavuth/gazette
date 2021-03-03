@@ -15,9 +15,11 @@ const schema = buildSchema(`
   }
   type Query {
     login(email: String, password: String): User
+    getuser(userid: String): User
   }
   type Mutation {
-    create(username: String, password: String, email: String, role: String, info: String, date: String, time: String): User
+    createuser(userid: String, username: String, password: String, email: String, role: String, info: String, date: String, time: String): User
+    updateuser(userid: String, username: String, password: String, email: String, role: String, info: String, date: String, time: String): User
   }
 `)
 

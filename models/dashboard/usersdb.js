@@ -66,15 +66,15 @@ class Usersdb{
     return await this.users.countDocuments({});
   }
 
-  async updateUser(req){
-    const user = await this.users.findOne({userid:req.params.authorId});
-    user.username = req.body.username;
-    user.email = req.body.email;
-    user.role = req.body.role;
-    user.info = req.body.info;
-    user.date = new Date(req.body.date);
-    if(req.body.password !== "oldpassword"){
-      const hash = this.bcrypt.hashSync(req.body.password, 12);
+  async updateUser(args){
+    const user = await this.users.findOne({userid: args.userid});
+    user.username = args.username;
+    user.email = args.email;
+    user.role = args.role;
+    user.info = args.info;
+    user.date = new Date(args.date+' '+args.time);
+    if(args.password !== "oldpassword"){
+      const hash = this.bcrypt.hashSync(args.password, 12);
       user.password = hash;
     }
     return await user.save();

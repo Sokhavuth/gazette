@@ -14,10 +14,6 @@ class Listing extends React.Component {
     this.generateItems()
   }
 
-  editUser = () => {
-    alert()
-  }
-
   generateItems = () => {
     const users = []
     const userData = this.props.userData
@@ -31,8 +27,8 @@ class Listing extends React.Component {
           <div>{(new Date(userData.authors[v].date)).toLocaleDateString('km-KH')}</div>
         </div>
         <div className={styles.edit}>
-          <Link href={`/user/delete/${userData.authors[v].userid}`}><a><img alt="" src="/images/delete.png" /></a></Link>
-          <Link href={`/user/edit/${userData.authors[v].userid}`}><a><img alt="" src="/images/edit.png" /></a></Link>
+          <a onClick={() => this.props.deleteUser(userData.authors[v].userid)}><img alt="" src="/images/delete.png" /></a>
+          <a onClick={()=> this.props.editUser(userData.authors[v].userid)}><img alt="" src="/images/edit.png" /></a>
         </div>
       </li>)
     }
