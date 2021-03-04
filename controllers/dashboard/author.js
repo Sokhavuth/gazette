@@ -33,7 +33,7 @@ class Author{
       }
 
     }else{
-      data.message = 'Only Administrator have the right to create user.​';
+      data.message = 'Only Administrator have the right to create user.​'
       return {metadata: data.message}
     }
   }
@@ -69,21 +69,32 @@ class Author{
       }else{
         const result = await self.emailCheck(args.email)
         if(result){
-          const author = await self.usersdb.updateUser(args);
-          author.metadata = `User ${author.username} was successfully updated`;
+          const author = await self.usersdb.updateUser(args)
+          author.metadata = `User ${author.username} was successfully updated`
           return author
         }else{
-          const message = 'This email does not exist.';
+          const message = 'This email does not exist.'
           return {metadata: message}
         }
       }
     
    }else{
-      const message = 'You are not authorized to modify this user.';
+      const message = 'You are not authorized to modify this user.'
       return {metadata: message}
+    }
+  }
+
+  async deleteAuthor(args, req){
+    const self = this
+    
+    if(req.session.user.role === "Admin"){
+      const user = await self.usersdb.deleteUser(args)
+      const message = `User ${user.username} has been deleted.`
+      user.metadata = message
+      return user
     }
   }
 
 }//end class
 
-module.exports = new Author();
+module.exports = new Author()

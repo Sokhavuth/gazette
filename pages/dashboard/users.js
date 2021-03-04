@@ -146,8 +146,29 @@ class Index extends React.Component {
     document.querySelector('[name="time"]').value = (new Date(parseInt(user.date))).toLocaleTimeString('it-IT')
   }
 
-  deleteUser = (userid) => {
-    alert(userid)
+  deleteUser = async (userid) => {
+    const client = new ApolloClient({
+      uri: '/graphql',
+      cache: new InMemoryCache()
+    })
+
+    const mutation = gql`
+    mutation Deleteuser($userid: String){
+      deleteuser(userid: $userid) {
+        metadata
+      } 
+    }
+    `
+    const { data } = await client.mutate({
+      mutation: mutation,
+      variables: {
+        userid: userid,
+      }
+    })
+
+    const metadata = data.deleteuser.metadata
+    this.setState({message: metadata})
+    Router.reload()
   }
 
   render(){
@@ -166,6 +187,7 @@ class Index extends React.Component {
             <div className={styles.status}>Status: {this.state.message}</div>
             <Listing userData={this.state.userData} editUser={this.editUser} deleteUser={this.deleteUser} />
           </div>
+          
           <div className={styles.sidebarRight}>
             <form className={styles.usersForm} onSubmit={this.onSubmitHandler} method='post'>
               <input name='username' onChange={this.onChangeHandler} type='text' placeholder='Username' required />
@@ -177,6 +199,7 @@ class Index extends React.Component {
               <input type='submit' value='Submit' />
             </form>
           </div>
+          
           <div></div><Footer /><div></div>
         </div>
       </div>

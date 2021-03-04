@@ -19,6 +19,11 @@ var root = {
     const author = require('../../../controllers/dashboard/author')
     const user = await author.updateAuthor(args, req)
     return user
+  },
+  deleteuser: async (args, req) => {
+    const author = require('../../../controllers/dashboard/author')
+    const user = await author.deleteAuthor(args, req)
+    return user
   }
 }
 

@@ -2,6 +2,10 @@ $vBackground: #ddd;
 
 .HeaderWrapper{
   background: $vBackground;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 999;
   .Header{
     display: grid;
     grid-template-columns: 25% auto 20%;
