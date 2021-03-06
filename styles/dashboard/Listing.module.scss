@@ -28,6 +28,14 @@
         cursor: pointer;
       }
     }
+    .pagination{
+      text-align: center;
+      padding: 5px 5px 0;
+      img:hover{
+        opacity: .5;
+        cursor: pointer;
+      }
+    }
   }
   li:hover img{
     visibility: visible;

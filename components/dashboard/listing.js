@@ -39,9 +39,18 @@ class Listing extends React.Component {
   render(){
     
     return(
-      <ul className={styles.Listing}>
+      <div>
+      <ul id='listing' className={styles.Listing}>
         {this.state.userList}
+        {this.props.usersList}
       </ul>
+
+      <ul className={styles.Listing}>
+        <li>
+          <div></div><div id='pagination' className={styles.pagination}><img onClick={this.props.paginate} alt="" src="/images/load-more.png" /></div><div></div>
+        </li>
+      </ul>
+      </div>
     )
   }
 }//end class

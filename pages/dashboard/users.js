@@ -4,9 +4,12 @@ import Sidebar from '../../components/dashboard/sidebar'
 import Listing from '../../components/dashboard/listing'
 import Footer from '../../components/footer'
 import styles from '../../styles/dashboard/Users.module.scss'
+import style from '../../styles/dashboard/Listing.module.scss'
 import Router from 'next/router'
 import dynamic from 'next/dynamic'
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client'
+import Link from 'next/link'
+import $ from 'jquery'
 
 const Ckeditor = dynamic(
   () => import('../../components/dashboard/ckeditor'),
@@ -26,7 +29,9 @@ class Index extends React.Component {
       date: '',
       time: '',
       message: '',
-      userData: JSON.parse(this.props.userData)
+      userData: JSON.parse(this.props.userData),
+      page: 0,
+      usersList: ''
     }
   }
 
@@ -171,6 +176,75 @@ class Index extends React.Component {
     Router.reload()
   }
 
+  paginate = async () => {
+    this.state.page += 1;
+    $('#pagination img').attr('src', '/images/loading.gif')
+
+    const client = new ApolloClient({
+      uri: '/graphql',
+      cache: new InMemoryCache()
+    })
+
+    const query = gql`
+    query Paginateuser($page: Int){
+      paginateuser(page: $page) {
+        userid
+        username
+        email
+        role
+        info
+        date
+        metadata
+      } 
+    }
+    `
+    const { data } = await client.query({
+      query: query,
+      variables: {
+        page: this.state.page,
+      }
+    })
+    
+    const users = data.paginateuser
+    if(users.length > 0){
+      const metadata = JSON.parse(users[0].metadata)
+      const userData = {
+        authors: users,
+        thumbs: metadata.thumbs,
+      }
+      this.loadmore(userData)
+    }else
+      $('#pagination img').attr('src', '/images/load-more.png')
+  }
+
+  loadmore = (data) => {
+    const usersList = []
+    const userData = data
+    
+    for(let v in (userData.thumbs)){
+      usersList.push(<li>
+        <Link href={`/user/${userData.authors[v].userid}`}><a><img className={style.thumb} alt="" src={userData.thumbs[v]} /></a></Link>
+        <div className={style.username}>
+          <Link href={`/user/${userData.authors[v].userid}`}><a>{userData.authors[v].username}</a></Link>
+          <div>{userData.authors[v].role}</div>
+          <div>{(new Date(userData.authors[v].date)).toLocaleDateString('km-KH')}</div>
+        </div>
+        <div className={style.edit}>
+          <a onClick={() => this.props.deleteUser(userData.authors[v].userid)}><img alt="" src="/images/delete.png" /></a>
+          <a onClick={()=> this.props.editUser(userData.authors[v].userid)}><img alt="" src="/images/edit.png" /></a>
+        </div>
+      </li>)
+    }
+
+    let list = this.state.usersList
+    if(list !== '') 
+      this.setState({usersList: list.push(usersList)})
+    else
+      this.setState({usersList: usersList})
+    
+    $('#pagination img').attr('src', '/images/load-more.png')
+  }
+
   render(){
     if(!(this.props.logged)){
       Router.push('/login')
@@ -185,7 +259,7 @@ class Index extends React.Component {
           <div className={styles.content}>
             <Ckeditor getCKEditor={this.getCKEditor} />
             <div className={styles.status}>Status: {this.state.message}</div>
-            <Listing userData={this.state.userData} editUser={this.editUser} deleteUser={this.deleteUser} />
+            <Listing usersList={this.state.usersList} userData={this.state.userData} editUser={this.editUser} deleteUser={this.deleteUser} paginate={this.paginate} />
           </div>
           
           <div className={styles.sidebarRight}>

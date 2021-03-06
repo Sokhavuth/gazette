@@ -24,6 +24,11 @@ var root = {
     const author = require('../../../controllers/dashboard/author')
     const user = await author.deleteAuthor(args, req)
     return user
+  },
+  paginateuser: async (args, req) => {
+    const author = require('../../../controllers/dashboard/author')
+    const users = await author.getAuthors(false, args.page)
+    return users
   }
 }
 

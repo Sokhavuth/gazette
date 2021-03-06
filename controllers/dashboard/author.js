@@ -38,7 +38,7 @@ class Author{
     }
   }
 
-  async getAuthors(id=false){
+  async getAuthors(id=false, page=false){
     const self = this
     const data = this.deepcopy(this.vdict)
     
@@ -48,6 +48,15 @@ class Author{
       const message = `User ${user.username} is being edited.`
       user.metadata = JSON.stringify({thumb: thumbs[0], message: message})
       return user
+    }else if(page){
+      const users = await this.usersdb.selectUser(this.vdict.dashboardLimit, false, page=page)
+      const thumbs = self.tool.getThumbUrl(users, 'author')
+      const count = await self.usersdb.countUser()
+      if(users.length > 0)
+        users[0].metadata = JSON.stringify({thumbs: thumbs, count: count})
+        
+      return users
+
     }else{
       data.authors = await this.usersdb.selectUser(this.vdict.dashboardLimit)
       data.thumbs = self.tool.getThumbUrl(data.authors, 'author')
