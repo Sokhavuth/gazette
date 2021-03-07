@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from '../../styles/dashboard/Listing.module.scss'
+import styles from '../../styles/dashboard/UserListing.module.scss'
 import Link from 'next/link'
 
 class Listing extends React.Component {

@@ -29,6 +29,11 @@ var root = {
     const author = require('../../../controllers/dashboard/author')
     const users = await author.getAuthors(false, args.page)
     return users
+  },
+  createcategory: async (args, req) => {
+    const category = require('../../../controllers/dashboard/category')
+    const result = await category.insertCategory(args, req)
+    return result
   }
 }
 

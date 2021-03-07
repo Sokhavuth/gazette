@@ -13,6 +13,14 @@ const schema = buildSchema(`
     time: String
     metadata: String
   }
+  type Category {
+    categoryid: String
+    categoryname: String
+    info: String
+    date: String
+    time: String
+    metadata: String
+  }
   type Query {
     login(email: String, password: String): User
     getuser(userid: String): User
@@ -22,6 +30,7 @@ const schema = buildSchema(`
     createuser(userid: String, username: String, password: String, email: String, role: String, info: String, date: String, time: String): User
     updateuser(userid: String, username: String, password: String, email: String, role: String, info: String, date: String, time: String): User
     deleteuser(userid: String): User
+    createcategory(categoryid: String, categoryname: String, info: String, date: String, time: String): Category
   }
 `)
 

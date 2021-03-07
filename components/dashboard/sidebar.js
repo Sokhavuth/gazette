@@ -11,7 +11,8 @@ class Sidebar extends React.Component {
         <Link href="/dashboard"><a>Home</a></Link>
         <img alt='' src='/images/posting.png' /><a>Posts</a>
         <img alt='' src='/images/paging.png' /><a>Pages</a>
-        <img alt='' src='/images/category.png' /><a>Categories</a>
+        <Link href="/dashboard/categories"><a><img alt='' src='/images/category.png' /></a></Link>
+        <Link href="/dashboard/categories"><a>Categories</a></Link>
         <img alt='' src='/images/upload.png' /><a>Upload</a>
         <Link href="/dashboard/users"><a><img alt='' src='/images/user.png' /></a></Link>
         <Link href="/dashboard/users"><a>Users</a></Link>
