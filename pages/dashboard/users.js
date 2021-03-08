@@ -39,6 +39,8 @@ class Index extends React.Component {
     const userData = JSON.parse(this.props.userData)
     this.setState({
       message: `Total number of users ${userData.count}`,
+      date: this.props.date,
+      time: this.props.time,
     })
   }
 
@@ -227,18 +229,18 @@ class Index extends React.Component {
         <div className={style.username}>
           <Link href={`/user/${userData.authors[v].userid}`}><a>{userData.authors[v].username}</a></Link>
           <div>{userData.authors[v].role}</div>
-          <div>{(new Date(userData.authors[v].date)).toLocaleDateString('km-KH')}</div>
+          <div>{(new Date(parseInt(userData.authors[v].date))).toLocaleDateString('km-KH')}</div>
         </div>
         <div className={style.edit}>
-          <a onClick={() => this.props.deleteUser(userData.authors[v].userid)}><img alt="" src="/images/delete.png" /></a>
-          <a onClick={()=> this.props.editUser(userData.authors[v].userid)}><img alt="" src="/images/edit.png" /></a>
+          <a onClick={() => this.deleteUser(userData.authors[v].userid)}><img alt="" src="/images/delete.png" /></a>
+          <a onClick={()=> this.editUser(userData.authors[v].userid)}><img alt="" src="/images/edit.png" /></a>
         </div>
       </li>)
     }
 
     let list = this.state.usersList
     if(list !== '') 
-      this.setState({usersList: list.push(usersList)})
+      this.setState({usersList: list.concat(usersList)})
     else
       this.setState({usersList: usersList})
     
@@ -268,8 +270,8 @@ class Index extends React.Component {
               <input name='email' onChange={this.onChangeHandler} type='email' placeholder='Email' required />
               <input name='password' onChange={this.onChangeHandler} type='password' placeholder='Password' required />
               <input name='role' onChange={this.onChangeHandler} type='text' placeholder='Role' required />
-              <input name='date' onChange={this.onChangeHandler} value={this.props.date} type='date' required />
-              <input name='time' onChange={this.onChangeHandler} value={this.props.time} step="1" type='time' required />
+              <input name='date' onChange={this.onChangeHandler} value={this.state.date} type='date' required />
+              <input name='time' onChange={this.onChangeHandler} value={this.state.time} type='time' required />
               <input type='submit' value='Submit' />
             </form>
           </div>

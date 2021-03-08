@@ -35,6 +35,21 @@ class Categoriesdb{
     return await this.categories.countDocuments({})
   }
 
+  async updateCategory(args){
+    const category = await this.categories.findOne({categoryid: args.categoryid})
+    category.categoryname = args.categoryname
+    category.info = args.info
+    category.date = new Date(args.date+' '+args.time)
+  
+    return await category.save()
+  }
+
+  async deleteCategory(args){
+    const category = await this.categories.findOne({categoryid: args.categoryid})
+    await this.categories.deleteOne({categoryid:category.categoryid})
+    return category
+  }
+
 }//class ending 
 
 module.exports = new Categoriesdb()

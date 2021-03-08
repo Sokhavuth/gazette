@@ -28,19 +28,19 @@ class Category{
     const data = this.deepcopy(this.vdict)
     
     if(id){
-      const user = await this.usersdb.selectUser(1, id) 
-      const thumbs = self.tool.getThumbUrl([user], 'author')
-      const message = `User ${user.username} is being edited.`
-      user.metadata = JSON.stringify({thumb: thumbs[0], message: message})
-      return user
+      const category = await this.categoriesdb.selectCategory(1, id) 
+      const thumbs = self.tool.getThumbUrl([category])
+      const message = `Category ${category.categoryname} is being edited.`
+      category.metadata = JSON.stringify({thumb: thumbs[0], message: message})
+      return category
     }else if(page){
-      const users = await this.usersdb.selectUser(this.vdict.dashboardLimit, false, page=page)
-      const thumbs = self.tool.getThumbUrl(users, 'author')
-      const count = await self.usersdb.countUser()
-      if(users.length > 0)
-        users[0].metadata = JSON.stringify({thumbs: thumbs, count: count})
+      const categories = await this.categoriesdb.selectCategory(this.vdict.dashboardLimit, false, page=page)
+      const thumbs = self.tool.getThumbUrl(categories)
+      const count = await self.categoriesdb.countCategory()
+      if(categories.length > 0)
+      categories[0].metadata = JSON.stringify({thumbs: thumbs, count: count})
         
-      return users
+      return categories
 
     }else{
       data.categories = await this.categoriesdb.selectCategory(this.vdict.dashboardLimit)
@@ -48,6 +48,30 @@ class Category{
       data.count = await self.categoriesdb.countCategory()
     
       return JSON.stringify(data)
+    }
+  }
+
+  async updateCategory(args, req){
+    const self = this
+    
+    if(req.session.user.role === "Admin") {
+      const category = await self.categoriesdb.updateCategory(args)
+      category.metadata = `Category ${category.categoryname} was successfully updated`
+      return category
+   }else{
+      const message = 'Only Administrator has the right to modify category.'
+      return {metadata: message}
+    }
+  }
+
+  async deleteCategory(args, req){
+    const self = this
+    
+    if(req.session.user.role === "Admin"){
+      const category = await self.categoriesdb.deleteCategory(args)
+      const message = `Category ${category.categoryname} has been deleted.`
+      category.metadata = message
+      return category
     }
   }
 

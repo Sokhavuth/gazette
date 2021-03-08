@@ -34,7 +34,27 @@ var root = {
     const category = require('../../../controllers/dashboard/category')
     const result = await category.insertCategory(args, req)
     return result
-  }
+  },
+  getcategory: async (args, req) => {
+    const category = require('../../../controllers/dashboard/category')
+    const result = await category.getCategories(args.categoryid, req)
+    return result
+  },
+  updatecategory: async (args, req) => {
+    const category = require('../../../controllers/dashboard/category')
+    const result = await category.updateCategory(args, req)
+    return result
+  },
+  deletecategory: async (args, req) => {
+    const category = require('../../../controllers/dashboard/category')
+    const result = await category.deleteCategory(args, req)
+    return result
+  },
+  paginatecategory: async (args, req) => {
+    const category = require('../../../controllers/dashboard/category')
+    const result = await category.getCategories(false, args.page)
+    return result
+  },
 }
 
 module.exports = root

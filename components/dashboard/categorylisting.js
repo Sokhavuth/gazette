@@ -26,8 +26,8 @@ class Listing extends React.Component {
           <div>{(new Date(categoryData.categories[v].date)).toLocaleDateString('km-KH')}</div>
         </div>
         <div className={styles.edit}>
-          <a onClick={() => this.props.deleteUser(categoryData.categories[v].categoryid)}><img alt="" src="/images/delete.png" /></a>
-          <a onClick={()=> this.props.editUser(categoryData.categories[v].categoryid)}><img alt="" src="/images/edit.png" /></a>
+          <a onClick={() => this.props.deleteCategory(categoryData.categories[v].categoryid)}><img alt="" src="/images/delete.png" /></a>
+          <a onClick={()=> this.props.editCategory(categoryData.categories[v].categoryid)}><img alt="" src="/images/edit.png" /></a>
         </div>
       </li>)
     }
@@ -41,7 +41,7 @@ class Listing extends React.Component {
       <div>
       <ul id='listing' className={`${styles.Listing}`}>
         {this.state.categoryList}
-        
+        {this.props.categoriesList}
       </ul>
 
       <ul className={styles.Listing}>
