@@ -9,7 +9,8 @@ class Sidebar extends React.Component {
       <div className={styles.Sidebar}>
         <Link href="/dashboard"><a><img alt='' src='/images/house.png' /></a></Link>
         <Link href="/dashboard"><a>Home</a></Link>
-        <img alt='' src='/images/posting.png' /><a>Posts</a>
+        <Link href="/dashboard/posts"><a><img alt='' src='/images/posting.png' /></a></Link>
+        <Link href="/dashboard/posts"><a>Posts</a></Link>
         <img alt='' src='/images/paging.png' /><a>Pages</a>
         <Link href="/dashboard/categories"><a><img alt='' src='/images/category.png' /></a></Link>
         <Link href="/dashboard/categories"><a>Categories</a></Link>

@@ -13,7 +13,7 @@ class Category{
   
     if(req.session.user.role === 'Admin'){
       let category = await self.categoriesdb.insertCategory(args)
-      const thumbs = self.tool.getThumbUrl([category]);
+      const thumbs = self.tool.getThumbUrl([category])
       const message = `Category ${category.categoryname} was successfully created.`
       category.metadata = JSON.stringify({thumb: thumbs[0], message: message})
       return category
@@ -23,7 +23,7 @@ class Category{
     }
   }
 
-  async getCategories(id=false, page=false){
+  async getCategories(id=false, page=false, amount=false){
     const self = this
     const data = this.deepcopy(this.vdict)
     
@@ -42,6 +42,9 @@ class Category{
         
       return categories
 
+    }else if(amount === 'all'){
+      const categories = await this.categoriesdb.selectCategory(amount)
+      return JSON.stringify(categories)
     }else{
       data.categories = await this.categoriesdb.selectCategory(this.vdict.dashboardLimit)
       data.thumbs = self.tool.getThumbUrl(data.categories)

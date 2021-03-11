@@ -55,6 +55,11 @@ var root = {
     const result = await category.getCategories(false, args.page)
     return result
   },
+  createpost: async (args, req) => {
+    const post = require('../../../controllers/dashboard/post')
+    const result = await post.insertPost(args, req)
+    return result
+  },
 }
 
 module.exports = root
