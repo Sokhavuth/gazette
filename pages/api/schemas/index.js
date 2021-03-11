@@ -24,7 +24,7 @@ const schema = buildSchema(`
   type Post {
     id: String
     title: String
-    content: String
+    info: String
     category: String
     date: String
     author: String
@@ -37,6 +37,7 @@ const schema = buildSchema(`
     paginateuser(page: Int): [User]
     getcategory(categoryid: String): Category
     paginatecategory(page: Int): [Category]
+    editpost(id: String): Post
   }
   type Mutation {
     createuser(userid: String, username: String, password: String, email: String, role: String, info: String, date: String, time: String): User
@@ -45,7 +46,8 @@ const schema = buildSchema(`
     createcategory(categoryid: String, categoryname: String, info: String, date: String, time: String): Category
     updatecategory(categoryid: String, categoryname: String, info: String, date: String, time: String): Category
     deletecategory(categoryid: String): Category
-    createpost(id: String, title: String, content: String, category: String, date: String): Post
+    createpost(id: String, title: String, info: String, category: String, date: String): Post
+    updatepost(id: String, title: String, info: String, category: String, date: String): Post
   }
 `)
 

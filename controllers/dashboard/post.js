@@ -28,7 +28,7 @@ class Post{
 
     const self = this
     let message = ''
-    var posts = []
+    var posts = {}
 
     try{
       const amount = await postdb.countPost()
@@ -43,8 +43,10 @@ class Post{
         }
       }else if(id){
         posts = await postdb.getPosts(config.dashboardLimit, id)
-        var thumbs = self.tool.getThumbUrl(posts)
-        message = `Post with title «${posts.name}» is beging edited.`
+        var thumbs = self.tool.getThumbUrl([posts])
+        message = `Post with title «${posts.title}» is beging edited.`
+        posts.metadata = JSON.stringify({message, thumbs: thumbs})
+        return posts
       }else{
         posts = await postdb.getPosts(config.dashboardLimit)
         var thumbs = self.tool.getThumbUrl(posts)
@@ -60,6 +62,22 @@ class Post{
 
     }catch(err){
       console.log(err)
+    }
+  }
+
+  async updatePost(args, req){
+    var postdb = require('../../models/dashboard/postdb')
+    var userpost = await this.getPost(false, args.id)
+    
+    if((req.session.user.role === "Admin") || (req.session.user.email === userpost.author)) {
+      
+      var post = await postdb.updatePost(args)
+      post.metadata = `Post with title ${post.title} was successfully updated`
+      
+      return post
+   }else{
+      const message = 'Only Administrator or the author has the right to modify this post.'
+      return {metadata: message}
     }
   }
 

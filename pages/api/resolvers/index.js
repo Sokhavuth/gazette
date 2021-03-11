@@ -60,6 +60,16 @@ var root = {
     const result = await post.insertPost(args, req)
     return result
   },
+  editpost: async (args, req) => {
+    const post = require('../../../controllers/dashboard/post')
+    const result = await post.getPost(false, args.id)
+    return result
+  },
+  updatepost: async (args, req) => {
+    const post = require('../../../controllers/dashboard/post')
+    const result = await post.updatePost(args, req)
+    return result
+  },
 }
 
 module.exports = root

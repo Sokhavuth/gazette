@@ -79,11 +79,11 @@ class Post extends React.Component {
     }
 
     const mutation = gql`
-    mutation ${Resolver}($id: String, $title: String, $content: String, $category: String, $date: String){
-      ${resolver}(id: $id, title: $title, content: $content, category: $category, date: $date){
+    mutation ${Resolver}($id: String, $title: String, $info: String, $category: String, $date: String){
+      ${resolver}(id: $id, title: $title, info: $info, category: $category, date: $date){
         id
         title
-        content
+        info
         category
         date
         author
@@ -96,16 +96,64 @@ class Post extends React.Component {
       variables: {
         id: this.state.postid,
         title: document.querySelector('[name="post-title"]').value,
-        content: (this.editor).getData(),
+        info: (this.editor).getData(),
         category: document.querySelector('[name="category"]').value,
         date: document.querySelector('[name="date"]').value,
       }
     })
     
-    const post = data.createpost
+    if(this.state.postid !== ''){
+      var post = data.updatepost
+    }else{
+      var post = data.createpost
+    }
+
     this.setState({message: post.metadata})
 
     Router.reload()
+  }
+
+  editPost = async (id) => {
+    const client = new ApolloClient({
+      uri: '/graphql',
+      cache: new InMemoryCache()
+    })
+
+    const query = gql`
+    query Editpost($id: String){
+      editpost(id: $id) {
+        id
+        title
+        info
+        category
+        date
+        metadata
+      } 
+    }
+    `
+    
+    const { data } = await client.query({
+      query: query,
+      variables: {
+        id: id,
+      }
+    })
+    
+    const post = data.editpost
+    
+    const metadata = JSON.parse(post.metadata)
+    this.setState({message: metadata.message})
+    this.state.postid = post.id
+
+    document.querySelector('[name="post-title"]').value = post.title
+    document.querySelector('[name="category"]').value = post.category
+    this.editor.setData(post.info)
+    var datetime = new Date(parseInt(post.date))
+    const date = datetime.toLocaleDateString('fr-CA')
+    const time = datetime.toLocaleTimeString('it-IT')
+    datetime = date+'T'+time
+    document.querySelector('[name="date"]').value = datetime
+    
   }
 
   render(){
@@ -124,7 +172,7 @@ class Post extends React.Component {
             <input name="post-title" className={styles.postTitle} onChange={this.onChangeHandler} type='text' placeholder='Post title' required />
             <Ckeditor getCKEditor={this.getCKEditor} />
             <div className={styles.status}>Status: {this.state.message}</div>
-            <Listing postsData={this.state.postsData} />
+            <Listing editPost={this.editPost} postsData={this.state.postsData} />
           </div>
           
           <div className={styles.sidebarRight}>
@@ -132,7 +180,7 @@ class Post extends React.Component {
               <select name='category' onChange={this.onChangeHandler}>
                 {this.state.categoryList}
               </select>
-              <input name='date' onChange={this.onChangeHandler} value={this.state.date} type='datetime-local' required />
+              <input name='date' onChange={this.onChangeHandler} value={this.state.date} step="1" type='datetime-local' required />
               <input type='submit' value='Submit' />
             </form>
           </div>

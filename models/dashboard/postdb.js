@@ -18,7 +18,7 @@ class Postdb{
     const id = (new Date()).getTime().toString(36) + Math.random().toString(36).slice(2)
     const date = new Date(args.date)
     const category = args.category
-    const post = new (this.post)({id: id, title: args.title, info: args.content, category: category, date: date, author: req.session.user.username})
+    const post = new (this.post)({id: id, title: args.title, info: args.info, category: category, date: date, author: req.session.user.email})
     return await post.save()
   }
 
@@ -34,6 +34,16 @@ class Postdb{
 
   async countPost(){
     return await this.post.countDocuments({})
+  }
+
+  async updatePost(args){
+    const post = await this.post.findOne({id: args.id})
+    post.title = args.title
+    post.info = args.info
+    post.category = args.category
+    post.date = new Date(args.date)
+  
+    return await post.save()
   }
 
 }// end class
