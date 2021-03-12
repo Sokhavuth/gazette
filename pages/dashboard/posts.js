@@ -156,6 +156,31 @@ class Post extends React.Component {
     
   }
 
+  deletePost = async (id) => {
+    const client = new ApolloClient({
+      uri: '/graphql',
+      cache: new InMemoryCache()
+    })
+
+    const mutation = gql`
+    mutation Deletepost($id: String){
+      deletepost(id: $id) {
+        metadata
+      } 
+    }
+    `
+    const { data } = await client.mutate({
+      mutation: mutation,
+      variables: {
+        id: id,
+      }
+    })
+
+    const metadata = data.deletepost.metadata
+    this.setState({message: metadata})
+    Router.reload()
+  }
+
   render(){
     if(!(this.props.logged)){
       Router.push('/login')
@@ -172,7 +197,7 @@ class Post extends React.Component {
             <input name="post-title" className={styles.postTitle} onChange={this.onChangeHandler} type='text' placeholder='Post title' required />
             <Ckeditor getCKEditor={this.getCKEditor} />
             <div className={styles.status}>Status: {this.state.message}</div>
-            <Listing editPost={this.editPost} postsData={this.state.postsData} />
+            <Listing deletePost={this.deletePost} editPost={this.editPost} postsData={this.state.postsData} />
           </div>
           
           <div className={styles.sidebarRight}>

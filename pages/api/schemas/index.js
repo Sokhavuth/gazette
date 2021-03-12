@@ -48,6 +48,7 @@ const schema = buildSchema(`
     deletecategory(categoryid: String): Category
     createpost(id: String, title: String, info: String, category: String, date: String): Post
     updatepost(id: String, title: String, info: String, category: String, date: String): Post
+    deletepost(id: String): Post
   }
 `)
 

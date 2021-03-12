@@ -46,6 +46,12 @@ class Postdb{
     return await post.save()
   }
 
+  async deletePost(args){
+    const post = await this.post.findOne({id: args.id})
+    await this.post.deleteOne({id: args.id})
+    return post
+  }
+
 }// end class
 
 module.exports = new Postdb()

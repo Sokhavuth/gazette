@@ -76,7 +76,22 @@ class Post{
       
       return post
    }else{
-      const message = 'Only Administrator or the author has the right to modify this post.'
+      const message = 'Only Administrator or the author of this post has the right to modify this post.'
+      return {metadata: message}
+    }
+  }
+
+  async deletePost(args, req){
+    var postdb = require('../../models/dashboard/postdb')
+    var userpost = await this.getPost(false, args.id)
+    
+    if((req.session.user.role === "Admin") || (req.session.user.email === userpost.author)){
+      const post = await postdb.deletePost(args)
+      const message = `Post with title ${post.title} has been deleted.`
+      post.metadata = message
+      return post
+    }else{
+      const message = 'Only Administrator or the author of this post has the right to modify this post.'
       return {metadata: message}
     }
   }

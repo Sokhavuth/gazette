@@ -70,6 +70,11 @@ var root = {
     const result = await post.updatePost(args, req)
     return result
   },
+  deletepost: async (args, req) => {
+    const post = require('../../../controllers/dashboard/post')
+    const result = await post.deletePost(args, req)
+    return result
+  }
 }
 
 module.exports = root
