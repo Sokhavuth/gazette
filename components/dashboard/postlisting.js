@@ -41,7 +41,7 @@ class Listing extends React.Component {
       <div>
       <ul id='listing' className={`${styles.Listing}`}>
         {this.state.postList}
-        
+        {this.props.postsList}
       </ul>
 
       <ul className={styles.Listing}>

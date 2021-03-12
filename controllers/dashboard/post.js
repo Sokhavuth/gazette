@@ -35,12 +35,16 @@ class Post{
 
       if(page){
         posts = await postdb.getPosts(config.dashboardLimit, false, page)
-        var thumbs = self.tool.getThumbUrl(posts)
         if(posts.length > 0){
           message = posts.length + ' more posts were added.'
+          var thumbs = self.tool.getThumbUrl(posts)
+          posts[0].metadata = JSON.stringify({message: message, thumbs: thumbs})
+          return posts
         }else{
           message = '0 post were added'
+          return posts
         }
+        
       }else if(id){
         posts = await postdb.getPosts(config.dashboardLimit, id)
         var thumbs = self.tool.getThumbUrl([posts])

@@ -74,7 +74,12 @@ var root = {
     const post = require('../../../controllers/dashboard/post')
     const result = await post.deletePost(args, req)
     return result
-  }
+  },
+  paginatepost: async (args, req) => {
+    const post = require('../../../controllers/dashboard/post')
+    const result = await post.getPost(args.page)
+    return result
+  },
 }
 
 module.exports = root

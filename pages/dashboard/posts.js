@@ -24,8 +24,9 @@ class Post extends React.Component {
       date: '',
       category: '',
       postid: '',
-      categoryList: '',
+      postsList: '',
       postsData: JSON.parse(this.props.postsData),
+      page: 0,
     }
 
   }
@@ -181,6 +182,72 @@ class Post extends React.Component {
     Router.reload()
   }
 
+  paginate = async () => {
+    this.state.page += 1;
+    $('#pagination img').attr('src', '/images/loading.gif')
+
+    const client = new ApolloClient({
+      uri: '/graphql',
+      cache: new InMemoryCache()
+    })
+
+    const query = gql`
+    query Paginatepost($page: Int){
+      paginatepost(page: $page) {
+        id
+        title
+        info
+        date
+        metadata
+      } 
+    }
+    `
+    const { data } = await client.query({
+      query: query,
+      variables: {
+        page: this.state.page,
+      }
+    })
+    
+    const posts = data.paginatepost
+    if(posts && (posts.length > 0)){
+      const metadata = JSON.parse(posts[0].metadata)
+      const postsData = {
+        posts: posts,
+        thumbs: metadata.thumbs,
+      }
+      this.loadmore(postsData)
+    }else
+      $('#pagination img').attr('src', '/images/load-more.png')
+  }
+
+  loadmore = (data) => {
+    const postList = []
+    const postsData = data
+    
+    for(let v in (postsData.thumbs)){
+      postList.push(<li>
+        <Link href={`/post/${postsData.posts[v].id}`}><a><img className={style.thumb} alt="" src={postsData.thumbs[v]} /></a></Link>
+        <div className={style.title}>
+          <Link href={`/post/${postsData.posts[v].id}`}><a>{postsData.posts[v].title}</a></Link>
+          <div>{(new Date(parseInt(postsData.posts[v].date))).toLocaleDateString('km-KH')}</div>
+        </div>
+        <div className={style.edit}>
+          <a onClick={() => this.deletePost(postsData.posts[v].id)}><img alt="" src="/images/delete.png" /></a>
+          <a onClick={()=> this.editPost(postsData.posts[v].id)}><img alt="" src="/images/edit.png" /></a>
+        </div>
+      </li>)
+    }
+
+    let list = this.state.postsList
+    if(list !== '') 
+      this.setState({postsList: list.concat(postList)})
+    else
+      this.setState({postsList: postList})
+    
+    $('#pagination img').attr('src', '/images/load-more.png')
+  }
+
   render(){
     if(!(this.props.logged)){
       Router.push('/login')
@@ -197,7 +264,7 @@ class Post extends React.Component {
             <input name="post-title" className={styles.postTitle} onChange={this.onChangeHandler} type='text' placeholder='Post title' required />
             <Ckeditor getCKEditor={this.getCKEditor} />
             <div className={styles.status}>Status: {this.state.message}</div>
-            <Listing deletePost={this.deletePost} editPost={this.editPost} postsData={this.state.postsData} />
+            <Listing paginate={this.paginate} postsList={this.state.postsList} deletePost={this.deletePost} editPost={this.editPost} postsData={this.state.postsData} />
           </div>
           
           <div className={styles.sidebarRight}>

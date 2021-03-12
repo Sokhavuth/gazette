@@ -38,6 +38,7 @@ const schema = buildSchema(`
     getcategory(categoryid: String): Category
     paginatecategory(page: Int): [Category]
     editpost(id: String): Post
+    paginatepost(page: Int): [Post]
   }
   type Mutation {
     createuser(userid: String, username: String, password: String, email: String, role: String, info: String, date: String, time: String): User
