@@ -248,6 +248,11 @@ class Post extends React.Component {
     $('#pagination img').attr('src', '/images/load-more.png')
   }
 
+  showLoading = (uri) => {
+    if(Router.pathname !== uri)
+      $('#loading-page').append("<img alt='' src='/images/loading.gif' />")
+  }
+
   render(){
     if(!(this.props.logged)){
       Router.push('/login')
@@ -258,13 +263,14 @@ class Post extends React.Component {
         <Header title='Posts' />
         <div className={`${styles.body} region`}>
           <div className={styles.sidebar}>
-            <Sidebar />
+            <Sidebar showLoading={this.showLoading} />
           </div>
           <div className={styles.content}>
             <input name="post-title" className={styles.postTitle} onChange={this.onChangeHandler} type='text' placeholder='Post title' required />
             <Ckeditor getCKEditor={this.getCKEditor} />
             <div className={styles.status}>Status: {this.state.message}</div>
             <Listing paginate={this.paginate} postsList={this.state.postsList} deletePost={this.deletePost} editPost={this.editPost} postsData={this.state.postsData} />
+            <div id='loading-page' className={styles.loadingPage}></div>
           </div>
           
           <div className={styles.sidebarRight}>

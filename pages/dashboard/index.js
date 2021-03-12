@@ -4,10 +4,16 @@ import Sidebar from '../../components/dashboard/sidebar'
 import Footer from '../../components/footer'
 import styles from '../../styles/dashboard/Index.module.scss'
 import Router from 'next/router'
+import $ from 'jquery'
 
 class Index extends React.Component {
   constructor(props){
     super(props)
+  }
+
+  showLoading = (uri) => {
+    if(Router.pathname !== uri)
+      $('#index-loading-page').append("<img alt='' src='/images/loading.gif' />")
   }
 
   render(){
@@ -20,10 +26,10 @@ class Index extends React.Component {
         <Header title='Dashboard' />
         <div className={`${styles.body} region`}>
           <div className={styles.sidebar}>
-            <Sidebar />
+            <Sidebar showLoading={this.showLoading} />
           </div>
           <div className={styles.content}>
-            content
+            <div id='index-loading-page' className={styles.loadingPage}></div>
           </div>
           <div className={styles.sidebarRight}>
             Sidebar

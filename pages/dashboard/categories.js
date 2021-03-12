@@ -232,6 +232,11 @@ class Category extends React.Component {
     $('#pagination img').attr('src', '/images/load-more.png')
   }
 
+  showLoading = (uri) => {
+    if(Router.pathname !== uri)
+      $('#category-loading-page').append("<img alt='' src='/images/loading.gif' />")
+  }
+
   render(){
     if(!(this.props.logged)){
       Router.push('/login')
@@ -242,12 +247,13 @@ class Category extends React.Component {
         <Header title='Categories' />
         <div className={`${styles.body} region`}>
           <div className={styles.sidebar}>
-            <Sidebar />
+            <Sidebar showLoading={this.showLoading} />
           </div>
           <div className={styles.content}>
             <Ckeditor getCKEditor={this.getCKEditor} />
             <div className={styles.status}>Status: {this.state.message}</div>
             <Listing categoriesList={this.state.categoriesList} paginate={this.paginate} deleteCategory={this.deleteCategory} editCategory={this.editCategory} categoryData={this.state.categoryData} />
+            <div id='category-loading-page' className={styles.loadingPage}></div>
           </div>
           
           <div className={styles.sidebarRight}>

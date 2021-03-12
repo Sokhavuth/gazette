@@ -247,6 +247,11 @@ class Index extends React.Component {
     $('#pagination img').attr('src', '/images/load-more.png')
   }
 
+  showLoading = (uri) => {
+    if(Router.pathname !== uri)
+    $('#user-loading-page').append("<img alt='' src='/images/loading.gif' />")
+  }
+
   render(){
     if(!(this.props.logged)){
       Router.push('/login')
@@ -256,12 +261,13 @@ class Index extends React.Component {
         <Header title='Users' />
         <div className={`${styles.body} region`}>
           <div className={styles.sidebar}>
-            <Sidebar />
+            <Sidebar showLoading={this.showLoading} />
           </div>
           <div className={styles.content}>
             <Ckeditor getCKEditor={this.getCKEditor} />
             <div className={styles.status}>Status: {this.state.message}</div>
             <Listing usersList={this.state.usersList} userData={this.state.userData} editUser={this.editUser} deleteUser={this.deleteUser} paginate={this.paginate} />
+            <div id='user-loading-page' className={styles.loadingPage}></div>
           </div>
           
           <div className={styles.sidebarRight}>
