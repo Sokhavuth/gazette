@@ -80,6 +80,26 @@ var root = {
     const result = await post.getPost(args.page)
     return result
   },
+  createpage: async (args, req) => {
+    const page = require('../../../controllers/dashboard/page')
+    const result = await page.insertPage(args, req)
+    return result
+  },
+  editpage: async (args, req) => {
+    const page = require('../../../controllers/dashboard/page')
+    const result = await page.getPage(false, args.id)
+    return result
+  },
+  updatepage: async (args, req) => {
+    const page = require('../../../controllers/dashboard/page')
+    const result = await page.updatePage(args, req)
+    return result
+  },
+  deletepage: async (args, req) => {
+    const page = require('../../../controllers/dashboard/page')
+    const result = await page.deletePage(args, req)
+    return result
+  },
 }
 
 module.exports = root

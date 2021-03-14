@@ -11,7 +11,8 @@ class Sidebar extends React.Component {
         <Link href="/dashboard"><a onClick={()=>this.props.showLoading('/dashboard')} >Home</a></Link>
         <Link href="/dashboard/posts"><a onClick={()=>this.props.showLoading('/dashboard/posts')} ><img alt='' src='/images/posting.png' /></a></Link>
         <Link href="/dashboard/posts"><a onClick={()=>this.props.showLoading('/dashboard/posts')}>Posts</a></Link>
-        <img  alt='' src='/images/paging.png' /><a>Pages</a>
+        <Link href="/dashboard/pages"><a onClick={()=>this.props.showLoading('/dashboard/pages')}><img  alt='' src='/images/paging.png' /></a></Link>
+        <Link href="/dashboard/pages"><a onClick={()=>this.props.showLoading('/dashboard/pages')}>Pages</a></Link>
         <Link href="/dashboard/categories"><a onClick={()=>this.props.showLoading('/dashboard/categories')} ><img alt='' src='/images/category.png' /></a></Link>
         <Link href="/dashboard/categories"><a onClick={()=>this.props.showLoading('/dashboard/categories')} >Categories</a></Link>
         <img alt='' src='/images/upload.png' /><a>Upload</a>

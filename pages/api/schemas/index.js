@@ -30,6 +30,14 @@ const schema = buildSchema(`
     author: String
     metadata: String
   }
+  type Page {
+    id: String
+    title: String
+    info: String
+    date: String
+    author: String
+    metadata: String
+  }
 
   type Query {
     login(email: String, password: String): User
@@ -39,6 +47,7 @@ const schema = buildSchema(`
     paginatecategory(page: Int): [Category]
     editpost(id: String): Post
     paginatepost(page: Int): [Post]
+    editpage(id: String): Page
   }
   type Mutation {
     createuser(userid: String, username: String, password: String, email: String, role: String, info: String, date: String, time: String): User
@@ -50,6 +59,9 @@ const schema = buildSchema(`
     createpost(id: String, title: String, info: String, category: String, date: String): Post
     updatepost(id: String, title: String, info: String, category: String, date: String): Post
     deletepost(id: String): Post
+    createpage(id: String, title: String, info: String, date: String): Page
+    updatepage(id: String, title: String, info: String, date: String): Page
+    deletepage(id: String): Page
   }
 `)
 
