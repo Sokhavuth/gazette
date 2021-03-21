@@ -27,7 +27,7 @@ class Listing extends React.Component {
         </div>
         <div className={styles.edit}>
           <a onClick={() => this.props.deletePage(pagesData.pages[v].id)}><img alt="" src="/images/delete.png" /></a>
-          <a onClick={()=> this.props.editPage(pagesData.pages[v].id)}><img alt="" src="/images/edit.png" /></a>
+          <a onClick={() => this.props.editPage(pagesData.pages[v].id)}><img alt="" src="/images/edit.png" /></a>
         </div>
       </li>)
     }

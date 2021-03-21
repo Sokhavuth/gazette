@@ -1,0 +1,38 @@
+.Panel{
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  grid-gap: 10px;
+  padding: 10px 0;
+  .postOuter{
+    position: relative;
+    img{
+      width: 100%;
+    }
+    .title{
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      padding: 10px;
+      color: white;
+      width: 100%;
+      text-shadow: 2px 2px 4px #000000;
+      background: -webkit-linear-gradient(bottom, black,transparent);
+    }
+    .date{
+      position: absolute;
+      top: 0;
+      right: 5px;
+      color: white;
+      font-size: 12px;
+      text-shadow: 2px 2px 4px #000000;
+    }
+  }
+  
+}
+
+@media only screen and (max-width: 600px){
+  .Panel{
+    grid-template-columns: 100%;
+    padding: 10px;
+  }
+}

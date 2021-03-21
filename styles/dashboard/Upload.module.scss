@@ -1,0 +1,34 @@
+.Upload{
+  .body{
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 15% auto 15%;
+    .content{
+      position: relative;
+      padding: 0 20px;
+      border: 1px solid #ddd;
+      border-top: 0;
+      border-bottom: 0;
+      form{
+        background: #ddd;
+        padding: 20px;
+        width: 50%;
+        margin: 0 auto;
+        input[type=submit]{
+          margin-top: 10px;
+          width: 100%;
+          padding: 5px;
+        }
+      }
+      .loadingPage{
+        position: absolute;
+        top: 200px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+    .sidebarRight{
+      padding-left: 20px;
+    }
+  }
+}

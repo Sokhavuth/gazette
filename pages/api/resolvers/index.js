@@ -100,6 +100,11 @@ var root = {
     const result = await page.deletePage(args, req)
     return result
   },
+  paginatepage: async (args, req) => {
+    const page = require('../../../controllers/dashboard/page')
+    const result = await page.getPage(args.page)
+    return result
+  },
 }
 
 module.exports = root

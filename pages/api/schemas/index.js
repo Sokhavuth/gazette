@@ -48,6 +48,7 @@ const schema = buildSchema(`
     editpost(id: String): Post
     paginatepost(page: Int): [Post]
     editpage(id: String): Page
+    paginatepage(page: Int): [Page]
   }
   type Mutation {
     createuser(userid: String, username: String, password: String, email: String, role: String, info: String, date: String, time: String): User

@@ -196,7 +196,7 @@ class Post extends React.Component {
     if(pages && (pages.length > 0)){
       const metadata = JSON.parse(pages[0].metadata)
       const pagesData = {
-        pages: poages,
+        pages: pages,
         thumbs: metadata.thumbs,
       }
       this.loadmore(pagesData)
