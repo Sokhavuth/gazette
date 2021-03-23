@@ -33,7 +33,17 @@ class Post{
     try{
       const amount = await postdb.countPost()
 
-      if(page){
+      if(page === 'postPage'){
+        posts = await postdb.getPosts(6, false, 1)
+        if(posts.length > 0){
+          var thumbs = self.tool.getThumbUrl(posts)
+          const data = JSON.stringify({thumbs: thumbs, posts: posts})
+          return data
+        }else{
+          message = '0 post were added'
+          return JSON.stringify(posts)
+        }
+      }else if(page){
         posts = await postdb.getPosts(config.dashboardLimit, false, page)
         if(posts.length > 0){
           message = posts.length + ' more posts were added.'
