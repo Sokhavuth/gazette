@@ -1,7 +1,7 @@
 import React from 'react'
 import Header from '../components/header'
 import Panel from '../components/panel'
-import Categories from '../components/channel'
+import Channel from '../components/channel'
 import Commercial from '../components/commercial'
 import Footer from '../components/footer'
 
@@ -16,7 +16,7 @@ class Home extends React.Component {
         <Header active='.home' />
         <Panel postsData={this.props.postsData} />
         <Commercial />
-        <Categories postsPage={this.props.postsPage} />
+        <Channel />
         <Footer />
       </div>
     )
