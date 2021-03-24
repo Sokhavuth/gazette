@@ -1,7 +1,7 @@
 import React from 'react'
 import Header from '../components/header'
 import Panel from '../components/panel'
-import Categories from '../components/categories'
+import Categories from '../components/channel'
 import Commercial from '../components/commercial'
 import Footer from '../components/footer'
 
@@ -28,11 +28,9 @@ export default Home
 export async function getServerSideProps({ req }){
   const posts = require('../controllers/dashboard/post')
   const postsData = await posts.getPost()
-  const postsPage = await posts.getPost('postPage')
   return {
     props: {
       postsData: postsData,
-      postsPage: postsPage,
     }
   }
 }
