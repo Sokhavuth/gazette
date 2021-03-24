@@ -27,7 +27,21 @@
       text-shadow: 2px 2px 4px #000000;
     }
   }
-  
+}
+
+.pagination{
+  text-align: center;
+  background: #ddd;
+  margin-bottom: 10px;
+  padding: 5px 0 2px;
+  img{
+    height: 30px;
+    margin: 0 2.5px;
+  }
+  img:hover{
+    opacity: .5;
+    cursor: pointer;
+  }
 }
 
 @media only screen and (max-width: 600px){

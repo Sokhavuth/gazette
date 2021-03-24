@@ -32,8 +32,16 @@ class Panel extends React.Component {
 
   render(){
     return(
-      <div className={`${styles.Panel} region`}>
-        {this.state.postList}
+      <div className={`${styles.wrapper} region`}>
+        <div className={`${styles.Panel}`}>
+          {this.state.postList}
+        
+        </div>
+        <div className={styles.pagination}>
+          <img alt='' src='/images/left.png' />
+          <img id='nav-home' alt='' src='/images/home.png' />
+          <img alt='' src='/images/right.png' />
+        </div>
       </div>
     )
   }
