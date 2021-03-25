@@ -58,8 +58,11 @@ class Home extends React.Component {
       }
 
       this.child.current.setPost(postsData)
-    }else
+    }else{
+      this.state.page -= 1
       $('#nav-home').attr('src', '/images/home.png')
+    }
+      
   }
 
   getOlderPost = async () => {
