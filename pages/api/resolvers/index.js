@@ -105,6 +105,11 @@ var root = {
     const result = await page.getPage(args.page)
     return result
   },
+  getOlderPost: async (args, req) => {
+    const post = require('../../../controllers/dashboard/post')
+    const result = await post.getPost(args.page)
+    return result
+  },
 }
 
 module.exports = root

@@ -1,6 +1,6 @@
 .Panel{
   display: grid;
-  grid-template-columns: auto auto auto auto auto;
+  grid-template-columns: calc(20% - 8px) calc(20% - 8px) calc(20% - 8px) calc(20% - 8px) calc(20% - 8px);
   grid-gap: 10px;
   padding: 10px 0;
   .postOuter{
@@ -48,5 +48,9 @@
   .Panel{
     grid-template-columns: 100%;
     padding: 10px;
+  }
+  .pagination{
+    margin-left: 10px;
+    margin-right: 10px;
   }
 }

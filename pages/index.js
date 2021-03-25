@@ -6,18 +6,20 @@ import Commercial from '../components/commercial'
 import Footer from '../components/footer'
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client'
 import $ from 'jquery'
+import deepcopy from 'deepcopy'
 
 class Home extends React.Component {
   constructor(props){
     super(props)
+    this.child = React.createRef()
     this.state = {
       page: 0,
-      label: '',
+      postList: '',
+      postsData: this.props.postsData,
     }
   }
 
-  getOlderPost = async () => {
-    this.state.page += 1;
+  getPost = async () => {
     $('#nav-home').attr('src', '/images/loading.gif')
 
     const client = new ApolloClient({
@@ -26,11 +28,12 @@ class Home extends React.Component {
     })
 
     const query = gql`
-    query GetOlderPost($page: Int, $label: String){
-      getOlderPost(page: $page, label: $label) {
+    query GetOlderPost($page: Int){
+      getOlderPost(page: $page) {
         id
         title
         date
+        metadata
       } 
     }
     `
@@ -41,23 +44,47 @@ class Home extends React.Component {
       }
     })
     
-    const posts = data.paginatepost
+    let posts = deepcopy(data.getOlderPost)
     if(posts && (posts.length > 0)){
       const metadata = JSON.parse(posts[0].metadata)
+
+      for(let v in posts){
+        posts[v].date = parseInt(posts[v].date)
+      }
+
       const postsData = {
         posts: posts,
         thumbs: metadata.thumbs,
       }
-      this.loadmore(postsData)
+
+      this.child.current.setPost(postsData)
     }else
-      $('#pagination img').attr('src', '/images/load-more.png')
+      $('#nav-home').attr('src', '/images/home.png')
+  }
+
+  getOlderPost = async () => {
+    this.state.page += 1;
+    this.getPost()
+    
+  }
+
+  getNewerPost = async () => {
+    if(this.state.page > 0){
+      this.state.page -= 1
+    }
+    this.getPost()
+  }
+
+  getHomePost = async () => {
+    this.state.page = 0
+    this.getPost()
   }
 
   render(){
     return(
       <div className='Home'>
         <Header active='.home' />
-        <Panel postsData={this.props.postsData} />
+        <Panel ref={this.child} postList={this.state.postList} getHomePost={this.getHomePost} getNewerPost={this.getNewerPost} getOlderPost={this.getOlderPost}  postsData={this.state.postsData} />
         <Commercial />
         <Channel />
         <Footer />

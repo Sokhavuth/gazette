@@ -1,23 +1,32 @@
 import React from 'react'
 import styles from '../styles/Panel.module.scss'
 import Link from 'next/link'
+import $ from 'jquery'
 
 class Panel extends React.Component {
   constructor(props){
     super(props)
     this.state = {
       postList: '',
+      postsData: '',
     }
 
   }
 
-  componentDidMount(){
-    this.setPost()
+  static getDerivedStateFromProps(props, state) {
+    return {
+      postsData: JSON.parse(props.postsData), 
+    }
   }
 
-  setPost = () => {
+  componentDidMount(){
+    this.setPost(this.state.postsData)
+  }
+
+  setPost = (json) => {
     let postList = []
-    let postData = JSON.parse(this.props.postsData)
+    let postData = json
+    
     for(let v in postData.thumbs){
       postList.push(
       <div className={styles.postOuter}>
@@ -28,19 +37,20 @@ class Panel extends React.Component {
       )
     }
     this.setState({postList: postList})
+    $('#nav-home').attr('src', '/images/home.png')
   }
 
   render(){
+    
     return(
       <div className={`${styles.wrapper} region`}>
-        <div className={`${styles.Panel}`}>
+        <div id='Panel' className={`${styles.Panel} `}>
           {this.state.postList}
-        
         </div>
         <div className={styles.pagination}>
-          <img alt='' src='/images/left.png' />
-          <img id='nav-home' alt='' src='/images/home.png' />
-          <img alt='' src='/images/right.png' />
+          <img onClick={this.props.getNewerPost} alt='' src='/images/left.png' />
+          <img onClick={this.props.getHomePost} id='nav-home' alt='' src='/images/home.png' />
+          <img onClick={this.props.getOlderPost} alt='' src='/images/right.png' />
         </div>
       </div>
     )

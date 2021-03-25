@@ -43,7 +43,7 @@ class Post{
           message = '0 post were added'
           return JSON.stringify(posts)
         }
-      }else if(page){
+      }else if(page || (page === 0)){
         posts = await postdb.getPosts(config.dashboardLimit, false, page)
         if(posts.length > 0){
           message = posts.length + ' more posts were added.'
