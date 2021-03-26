@@ -30,9 +30,9 @@ class Panel extends React.Component {
     for(let v in postData.thumbs){
       postList.push(
       <div className={styles.postOuter}>
-        <Link href={postData.posts[v].id}><a><img alt='' src={postData.thumbs[v]} /></a></Link>
+        <Link href={`/post/${postData.posts[v].id}`}><a><img alt='' src={postData.thumbs[v]} /></a></Link>
         <span className={styles.date}>{new Date(postData.posts[v].date).toLocaleDateString()}</span>
-        <Link href={postData.posts[v].id}><a><span className={styles.title}>{postData.posts[v].title}</span></a></Link>
+        <Link href={`/post/${postData.posts[v].id}`}><a><span className={styles.title}>{postData.posts[v].title}</span></a></Link>
       </div>
       )
     }

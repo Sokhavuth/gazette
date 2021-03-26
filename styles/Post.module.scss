@@ -1,0 +1,43 @@
+.Post{
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: auto 57% auto;
+  grid-gap: 20px;
+  .commercial{
+    margin-top: 20px;
+    height: 20px;
+  }
+  .sidebar{
+    background: #ddd;
+    img{
+      width: 100%;
+      float: left;
+    }
+  }
+  .content{
+    background: #ddd;
+    padding: 20px;
+    .title{
+      font: 20px/1.5 Oswald;
+    }
+    figure{
+      margin: 0;
+    }
+    img{
+      width: 100%;
+    }
+    .body{
+      margin-top: 20px;
+    }
+  }
+  
+}
+
+@media only screen and (max-width: 600px){
+  .Post{
+    grid-template-columns: 100%;
+    .sidebar{
+      display: none;
+    }
+  }
+}
