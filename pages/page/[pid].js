@@ -1,9 +1,9 @@
 import React from 'react'
-import Header from '../components/header'
-import Footer from '../components/footer'
+import Header from '../../components/header'
+import Footer from '../../components/footer'
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client'
-import styles from '../styles/Page.module.scss'
-import Commercial from '../components/commercial'
+import styles from '../../styles/Page.module.scss'
+import Commercial from '../../components/commercial'
 import ReactHtmlParser from 'react-html-parser'
 
 class Page extends React.Component {
@@ -16,7 +16,7 @@ class Page extends React.Component {
   }
 
   componentDidMount(){
-    this.getPage('km8w43aljapx9hcznj')
+    this.getPage(this.props.id)
   }
 
   getPage = async (id) => {
@@ -51,7 +51,7 @@ class Page extends React.Component {
   render(){
     return(
       <div className='Page'>
-        <Header active='.about' />
+        <Header active='.page' />
         <Commercial />
         <div className={`${styles.Page} region`}>
           <div className={styles.sidebar}></div>
@@ -68,3 +68,12 @@ class Page extends React.Component {
 }
 
 export default Page
+
+export async function getServerSideProps(context){
+  const id = context.params.pid
+  return {
+    props: {
+      id: id,
+    }
+  }
+}

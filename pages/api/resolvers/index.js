@@ -115,6 +115,11 @@ var root = {
     const result = await post.getPost(false, args.id)
     return result
   },
+  getSinglePage: async (args, req) => {
+    const page = require('../../../controllers/dashboard/page')
+    const result = await page.getPage(false, args.id)
+    return result
+  },
 }
 
 module.exports = root
