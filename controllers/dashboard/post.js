@@ -21,7 +21,7 @@ class Post{
     }
   }
 
-  async getPost(page=false, id=false){
+  async getPost(page=false, id=false, label=false){
     const postdb = require('../../models/dashboard/postdb')
     const config = require('../../config')
     this.tool = require('../../tool')
@@ -42,6 +42,28 @@ class Post{
         }else{
           message = '0 post were added'
           return JSON.stringify(posts)
+        }
+      }else if(page && label){
+        posts = await postdb.getPosts(config.categoryLimit, false, page, label)
+        if(posts.length > 0){
+          message = posts.length + ' more posts were added.'
+          var thumbs = self.tool.getThumbUrl(posts)
+          posts[0].metadata = JSON.stringify({message: message, thumbs: thumbs})
+          return posts
+        }else{
+          message = '0 post were added'
+          return posts
+        }
+      }else if(label){
+        posts = await postdb.getPosts(config.categoryLimit, false, false, label)
+        if(posts.length > 0){
+          message = posts.length + ' more posts were added.'
+          var thumbs = self.tool.getThumbUrl(posts)
+          posts[0].metadata = JSON.stringify({message: message, thumbs: thumbs})
+          return posts
+        }else{
+          message = '0 post were added'
+          return posts
         }
       }else if(page || (page === 0)){
         posts = await postdb.getPosts(config.dashboardLimit, false, page)

@@ -22,11 +22,15 @@ class Postdb{
     return await post.save()
   }
 
-  async getPosts(amount=5, id=false, page=0){
+  async getPosts(amount=5, id=false, page=0, label=false){
     if(id){
       return await this.post.findOne({id: id})
+    }else if(page && label){
+      return await this.post.find({category: label}).skip(amount * page).sort({date: -1, _id: -1}).limit(amount)
     }else if(page){
       return await this.post.find().skip(amount * page).sort({date: -1, _id: -1}).limit(amount)
+    }else if(label){
+      return await this.post.find({category: label}).sort({date: -1, _id: -1}).limit(amount)
     }else{
       return await this.post.find().sort({date: -1, _id: -1}).limit(amount)
     }

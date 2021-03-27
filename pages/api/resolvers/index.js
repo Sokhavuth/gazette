@@ -120,6 +120,11 @@ var root = {
     const result = await page.getPage(false, args.id)
     return result
   },
+  getPostByCategory: async (args, req) => {
+    const post = require('../../../controllers/dashboard/post')
+    const result = await post.getPost(args.page, false, args.label)
+    return result
+  },
 }
 
 module.exports = root

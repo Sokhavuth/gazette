@@ -52,6 +52,7 @@ const schema = buildSchema(`
     getOlderPost(page: Int): [Post]
     getSinglePost(id: String): Post
     getSinglePage(id: String): Page
+    getPostByCategory(label: String, page: Int): [Post]
   }
   type Mutation {
     createuser(userid: String, username: String, password: String, email: String, role: String, info: String, date: String, time: String): User

@@ -35,7 +35,8 @@ class Menu extends React.Component {
         <div className='region'>
         <div className={styles.topnav} id="topmenu">
           <Link href="/"><a className='home'>Home</a></Link>
-          <Link href="/news"><a className='news'>News</a></Link>
+          <Link href="/business"><a className='business'>Business</a></Link>
+          <Link href="/world"><a className='world'>World</a></Link>
           <Link href="/contact"><a className='contact'>Contact</a></Link>
           <Link href="/about"><a className='about'>About</a></Link>
           <Link href="/login"><a className='login'>Login</a></Link>
