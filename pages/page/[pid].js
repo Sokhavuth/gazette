@@ -1,6 +1,8 @@
 import React from 'react'
 import Header from '../../components/header'
 import Footer from '../../components/footer'
+import Sidebarleft from '../../components/sidebarleft'
+import Sidebarright from '../../components/sidebarright'
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client'
 import styles from '../../styles/Page.module.scss'
 import Commercial from '../../components/commercial'
@@ -54,12 +56,16 @@ class Page extends React.Component {
         <Header active='.page' />
         <Commercial />
         <div className={`${styles.Page} region`}>
-          <div className={styles.sidebar}></div>
+          <div className={styles.sidebar}>
+            <Sidebarleft />
+          </div>
           <div className={styles.content}>
             <div className={styles.title}>{this.state.page.title}</div>
             <div className={styles.body}>{ReactHtmlParser(this.state.page.info)}</div>
           </div>
-          <div className={styles.sidebar}></div>
+          <div className={styles.sidebar}>
+            <Sidebarright />
+          </div>
         </div>
         <Footer />
       </div>

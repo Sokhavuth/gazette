@@ -1,6 +1,8 @@
 import React from 'react'
 import Header from '../../components/header'
 import Footer from '../../components/footer'
+import Sidebarleft from '../../components/sidebarleft'
+import Sidebarright from '../../components/sidebarright'
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client'
 import styles from '../../styles/Post.module.scss'
 import Commercial from '../../components/commercial'
@@ -59,7 +61,7 @@ class Post extends React.Component {
         <div className={`${styles.Post} region`}>
           
           <div className={styles.sidebar}>
-            
+            <Sidebarleft />
           </div>
           <div className={styles.content}>
             <div className={styles.title}>{this.state.post.title}</div>
@@ -78,7 +80,7 @@ class Post extends React.Component {
             />
           </div>
           <div className={styles.sidebar}>
-            
+            <Sidebarright />
           </div>
 
         </div>

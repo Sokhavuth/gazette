@@ -1,5 +1,7 @@
 import React from 'react'
 import Header from '../components/header'
+import Sidebarleft from '../components/sidebarleft'
+import Sidebarright from '../components/sidebarright'
 import Footer from '../components/footer'
 import styles from '../styles/Search.module.scss'
 import Commercial from '../components/commercial'
@@ -36,12 +38,16 @@ class Search extends React.Component {
         <Header active='.page' />
         <Commercial />
         <div className={`${styles.Page} region`}>
-          <div className={styles.sidebar}></div>
+          <div className={styles.sidebar}>
+            <Sidebarleft />
+          </div>
           <div className={styles.content}>
             <div className={styles.title}>Search Result:</div>
             {this.state.titleList}
           </div>
-          <div className={styles.sidebar}></div>
+          <div className={styles.sidebar}>
+            <Sidebarright />
+          </div>
         </div>
         <Footer />
       </div>
