@@ -56,6 +56,11 @@ class Postdb{
     return post
   }
 
+  async searchPost(amount, q){
+    const posts = await this.post.find({info: {$regex: q}}).sort({date: -1, _id: -1}).limit(amount)
+    return posts
+  }
+
 }// end class
 
 module.exports = new Postdb()

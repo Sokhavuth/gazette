@@ -25,7 +25,11 @@ class Header extends React.Component {
         <div className={`${styles.Header} region`}>
           <div className='date'>{this.state.timezone}</div>
           <h1>{this.state.siteTitle}</h1>
-          <div className='search'>Search</div>
+          <div className={styles.searchbox}>
+          <form className='search' action='/search' method='get'>
+            <input name='q' placeholder='Search' style={{background: '#ededed url("/images/search.png") no-repeat 9px center'}} type='search'/> 
+          </form>
+          </div>
         </div>
         <Menu active={this.props.active} />
       </div>

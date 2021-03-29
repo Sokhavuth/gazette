@@ -7,10 +7,53 @@
     font: 50px/1.5 PirataOne;
     margin: 20px;
   }
+  .searchbox input {
+    outline: none;
+  }
+  .searchbox input[type=search] {
+    -webkit-appearance: textfield;
+    -webkit-box-sizing: content-box;
+    font-family: inherit;
+    font-size: 100%;
+  }
+  .searchbox input::-webkit-search-decoration,
+  .searchbox input::-webkit-search-cancel-button {
+    display: none; 
+  }
+  .searchbox input[type=search] {
+  
+    border: solid 1px #ccc;
+    padding: 9px 10px 9px 32px;
+    width: 55px;
+    
+    -webkit-border-radius: 10em;
+    -moz-border-radius: 10em;
+    border-radius: 10em;
+    
+    -webkit-transition: all .5s;
+    -moz-transition: all .5s;
+    transition: all .5s;
+  }
+  .searchbox input[type=search]:focus {
+    width: 130px;
+    background-color: #fff;
+    border-color: #66CC75;
+  
+    -webkit-box-shadow: 0 0 5px rgba(109,207,246,.5);
+    -moz-box-shadow: 0 0 5px rgba(109,207,246,.5);
+    box-shadow: 0 0 5px rgba(109,207,246,.5);
+  }
+  .searchbox input:-moz-placeholder {
+    color: #999;
+  }
+  .searchbox input::-webkit-input-placeholder {
+    color: #999;
+  }
 }
 
 @media only screen and (max-width: 600px){
   .Header{
     grid-template-columns: 100%;
+    margin-bottom: 10px;
   }
 }

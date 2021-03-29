@@ -132,6 +132,14 @@ class Post{
     }
   }
 
+  async searchPost(q){
+    const postdb = require('../../models/dashboard/postdb')
+    const config = require('../../config')
+
+    const posts = await postdb.searchPost(config.searchLimit, q)
+    return JSON.stringify(posts)
+  }
+
 }//end class
 
 module.exports = new Post()

@@ -5,7 +5,8 @@ import { ApolloClient, InMemoryCache, gql } from '@apollo/client'
 import styles from '../../styles/Post.module.scss'
 import Commercial from '../../components/commercial'
 import ReactHtmlParser from 'react-html-parser'
-import { DiscussionEmbed } from 'disqus-react';
+import { DiscussionEmbed } from 'disqus-react'
+import Link from 'next/link'
 
 class Post extends React.Component {
   constructor(props){
